@@ -27,12 +27,15 @@ sudo apt install ansible
 
 
 ## 📁 Project Structure
+```
+.
 ├── inventory.ini
 ├── playbook.yml
 ├── requirements.yml
 ├── Makefile
 └── group_vars/
-  └── all.yml
+    └── all.yml
+```
 
 
 ## 🔧 Configuration
