@@ -1,0 +1,22 @@
+- hosts: all
+  become: true
+
+  collections:
+    - community.docker
+
+  vars:
+    pip_install_packages:
+      - name: docker
+
+  roles:
+    - geerlingguy.pip
+    - geerlingguy.docker
+
+  tasks:
+    - name: run nginx
+      docker_container:
+        name: nginx
+        image: nginx
+        state: started
+        ports: 
+          - "30080:80"
