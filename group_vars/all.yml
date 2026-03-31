@@ -1,2 +1,12 @@
 ansible_user: ubuntu
 ansible_ssh_private_key_file: ~/.ssh/id_rsa
+
+redmine_port: 8080
+redmine_app_dir: /opt/redmine
+
+redmine_db_host: <POSTGRES_HOST>
+redmine_db_port: 5432
+redmine_db_name: redmine
+redmine_db_user: redmine
+redmine_db_password: <POSTGRES_PASSWORD>
+redmine_secret_key_base: <GENERATED_SECRET>
