@@ -1,4 +1,5 @@
-- hosts: all
+- name: Deploy Redmine application
+  hosts: all
   become: true
 
   pre_tasks:
@@ -6,9 +7,6 @@
       ansible.builtin.apt:
         update_cache: true
       tags: [setup]
-
-  collections:
-    - community.docker
 
   roles:
     - role: geerlingguy.pip
@@ -19,7 +17,7 @@
   tasks:
     - name: Create application directory
       ansible.builtin.file:
-        path: "{{redmine_app_dir}}"
+        path: "{{ redmine_app_dir }}"
         state: directory
         mode: "0755"
       tags: [deploy]
@@ -27,7 +25,7 @@
     - name: Create Redmine env file from template
       ansible.builtin.template:
         src: templates/redmine.env.j2
-        dest: "{{redmine_app_dir}}/.env"
+        dest: "{{ redmine_app_dir }}/.env"
         mode: "0600"
       tags: [deploy]
 
@@ -40,4 +38,5 @@
           --env-file {{ redmine_app_dir }}/.env \
           -p {{ redmine_port }}:3000 \
           redmine
+      changed_when: true
       tags: [deploy]
