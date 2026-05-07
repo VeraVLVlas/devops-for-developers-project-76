@@ -1,0 +1,6 @@
+redmine_db_host: 192.168.0.5
+redmine_db_port: 5432
+redmine_db_name: redmine
+redmine_db_user: redmine
+redmine_db_password: "{{ vault_redmine_db_password | default('test_password') }}"
+redmine_secret_key_base: "{{ vault_redmine_secret_key_base | default('test_secret_key_base') }}"
