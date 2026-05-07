@@ -4,10 +4,6 @@
   collections:
     - community.docker
 
-  vars:
-    pip_install_packages:
-      - name: docker
-
   roles:
     - role: geerlingguy.pip
       tags: [setup]
@@ -30,13 +26,12 @@
       tags: [deploy]
 
     - name: Run Redmine container
-      community.docker.docker_container:
-        name: redmine
-        image: redmine
-        state: started
-        recreate: true
-        restart_policy: always
-        published_ports:
-          - "{{ redmine_port }}:3000"
-        env_file: "{{redmine_app_dir}}/.env"
+      ansible.builtin.shell: |
+        docker rm -f redmine || true
+        docker run -d \
+          --name redmine \
+          --restart always \
+          --env-file {{ redmine_app_dir }}/.env \
+          -p {{ redmine_port }}:3000 \
+          redmine
       tags: [deploy]
