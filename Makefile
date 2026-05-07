@@ -1,5 +1,5 @@
 setup:
-	ansible-playbook -i inventory.ini playbook.yml --tags setup
+	ansible-playbook -i inventory.ini playbook.yml --tags setup --ask-vault-pass
 
 deploy:
 	ansible-playbook -i inventory.ini playbook.yml --tags deploy --ask-vault-pass

@@ -1,6 +1,12 @@
 - hosts: all
   become: true
 
+  pre_tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+      tags: [setup]
+
   collections:
     - community.docker
 
