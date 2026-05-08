@@ -13,6 +13,7 @@ The infrastructure includes:
 
 
 ## 🏗 Infrastructure
+```bash
 Internet
    ↓
 Cloudflare Tunnel
@@ -25,6 +26,7 @@ App Server 1              App Server 2
 (Redmine Docker)          (Redmine Docker)
         ↓
 PostgreSQL Database Server
+```
 
 
 ## ⚙️ Requirements
@@ -42,6 +44,7 @@ sudo apt install ansible
 
 
 ## 📁 Project Structure
+```bash
 .
 ├── inventory.ini
 ├── playbook.yml
@@ -54,6 +57,7 @@ sudo apt install ansible
 │   └── webservers/
 │       └── vault.yml
 └── roles/
+```
 
 
 ## 🔧 Configuration
