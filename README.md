@@ -24,8 +24,9 @@ Load Balancer (Nginx)
 ↓                              ↓
 App Server 1              App Server 2
 (Redmine Docker)          (Redmine Docker)
-        ↓
-PostgreSQL Database Server
+        ↓                       ↓
+        -------- PostgreSQL --------
+               Database Server
 ```
 
 
@@ -199,3 +200,71 @@ Open application:
 ```bash
 https://your-domain.com
 ```
+
+
+## 📊 Monitoring
+The project uses Datadog for infrastructure and application monitoring.
+Datadog Agent is deployed only on application servers (`webservers` group).
+Database and load balancer hosts are excluded from monitoring deployment.
+
+Monitoring includes:
+- host metrics
+- Docker metrics
+- HTTP health checks for Redmine
+- uptime monitoring
+
+📦 Install Datadog Role
+```bash
+ansible-galaxy install -r requirements.yml -p roles
+```
+
+🔐 Datadog Configuration
+Add Datadog API key to Vault:
+```bash
+ansible-vault edit group_vars/webservers/vault.yml
+```
+
+Example:
+```bash
+vault_datadog_api_key: YOUR_DATADOG_API_KEY
+```
+
+⚙️ Variables 
+Add group_vars/all.yml:
+```bash
+datadog_api_key: "{{ vault_datadog_api_key | default('test_api_key_datadog') }}"
+datadog_site: "us5.datadoghq.com or .eu"
+
+datadog_checks:
+  http_check:
+    init_config:
+
+    instances:
+      - name: Redmine
+        url: "http://localhost:8080"
+        timeout: 5
+```
+
+🚀 Install Datadog Agent
+```bash
+make monitoring
+```
+
+✅ Verify Agent Status
+```bash
+sudo systemctl status datadog-agent
+```
+
+Check agent details:
+```bash
+sudo datadog-agent status
+```
+
+🌐 Datadog Dashboard
+Hosts become available in:
+- Infrastructure → Hosts
+
+HTTP checks and metrics are available in:
+- Metrics
+- Monitors
+- Dashboards

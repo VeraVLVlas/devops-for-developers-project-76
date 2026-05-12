@@ -10,3 +10,15 @@ redmine_db_name: redmine
 redmine_db_user: redmine
 redmine_db_password: "{{ vault_redmine_db_password | default('test_password') }}"
 redmine_secret_key_base: "{{ vault_redmine_secret_key_base | default('test_secret_key_base') }}"
+
+datadog_api_key: "{{ vault_datadog_api_key | default('test_api_key_datadog') }}"
+datadog_site: "us5.datadoghq.com"
+
+datadog_checks:
+  http_check:
+    init_config:
+
+    instances:
+      - name: Redmine
+        url: "http://localhost:8080"
+        timeout: 5
